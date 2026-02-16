@@ -1,0 +1,87 @@
+Open terminal in kafka directory:
+==================================
+To start Zookeeper server:
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+port: 2181
+
+To start Kafka server:
+bin\windows\kafka-server-start.bat config\server.properties
+port: 9092
+
+To create topic:
+bin\windows\kafka-topics.bat --create --bopic user-topic --bootstrap-server localhost:9092
+
+To write or produce new topic:
+bin\windows\kafka-console-producer.bat --topic user-topic --bootstrap-server localhost:9092
+
+hi
+this is my message
+
+To read or consume topic:
+bin\windows\kafka-console-consumer.bat --topic user-topic --from-beginning --bootstrap-server localhost:9092
+
+hi
+this is my message
+
+
+
+Create spring boot project:
+Add dependencies
+1) Spring web
+2) Spring for Apache kafka
+
+
+
+docker run -p 9092:9092 apache/kafka:4.1.1
+
+
+Required Dependencies:
+implementation 'org.springframework.boot:spring-boot-starter-kafka'
+testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
+
+
+Producer Properties:
+# Kafka Configurations
+spring.kafka.producer.bootstrap-servers=localhost:9092
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+
+
+Consumer Properties:
+# Kafka Configurations
+spring.kafka.consumer.bootstrap-servers=localhost:9092
+spring.kafka.consumer.group-id=group-id
+spring.kafka.consumer.auto-offset-reset=earliest
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+
+Configurations in Producer:
+
+@Configuration
+public class KafkaConfig {
+
+    @Bean
+    public NewTopic topic() {
+        return TopicBuilder.name(KafkaConstant.ORDER_PLACED_TOPIC_NAME).build();
+    }
+}
+
+private final KafkaTemplate<String, String> kafkaTemplate;
+kafkaTemplate.send(KafkaConstant.ORDER_PLACED_TOPIC_NAME, "Order placed.");
+
+
+Configurations in Consumer:
+
+@Configuration
+public class KafkaConfig {
+
+    private final Logger logger = LoggerFactory.getLogger(KafkaConfig.class);
+
+    @KafkaListener(topics = KafkaConstant.ORDER_PLACED_TOPIC_NAME, groupId = KafkaConstant.GROUP_ID)
+    public void updateInventory(String value) {
+        logger.info("Kafka listener -> {}",value);
+    }
+}
+
+
