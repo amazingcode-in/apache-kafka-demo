@@ -1,0 +1,70 @@
+{
+  "info": {
+    "_postman_id": "7a782794-dcb6-4c75-83b9-3c03f2ae35c1",
+    "name": "Kafka-Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36209248"
+  },
+  "item": [
+    {
+      "name": "Credit Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 2500.75,\r\n  \"txnType\": \"CREDIT\",\r\n  \"customer\": {\r\n    \"id\": 1,\r\n    \"name\": \"John Doe\",\r\n    \"contact\": \"9876543210\"\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8181/api/payment/initiate",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8181",
+          "path": [
+            "api",
+            "payment",
+            "initiate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Debit Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 2500.75,\r\n  \"txnType\": \"DEBIT\",\r\n  \"customer\": {\r\n    \"id\": 1,\r\n    \"name\": \"John Doe\",\r\n    \"contact\": \"9876543210\"\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8181/api/payment/initiate",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8181",
+          "path": [
+            "api",
+            "payment",
+            "initiate"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
